@@ -7,5 +7,4 @@ func main() {
 	console.TestSimpleRead()
 	console.TestPeekBuffered()
 	console.TestDiscard()
-	console.Mega()
 }

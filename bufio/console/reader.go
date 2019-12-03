@@ -9,6 +9,12 @@ import (
 
 var r *bufio.Reader = bufio.NewReader(os.Stdin)
 
+func init() {
+	color.Info.Println("**************************************************")
+	color.Info.Println("************** Testing bufio Reader **************")
+	color.Info.Println("**************************************************")
+}
+
 // TestEmptyRead read nothing since the len(slice) = 0
 func TestEmptyRead() {
 	color.Info.Println("Reading into an empty slice should do nothing")
@@ -20,25 +26,33 @@ func TestEmptyRead() {
 	color.Cyan.Println("Reading into an empty slice worked as expected")
 }
 
-// TestSimpleRead read from the console in to a tiny slice
+// TestSimpleRead read from the console in to a slice
 func TestSimpleRead() {
-	color.Info.Println("Reading into an small slice")
-	out := make([]byte, 1)
-	color.Yellow.Println("Insert some text")
-	readed := readToSlice(out)
-	if readed != len(out) {
-		color.Error.Printf("Expected readed to be %d, but got %d \n", len(out), readed)
-	} else {
-		color.Cyan.Println("Reading into an small slice worked as expected")
-	}
+	color.Info.Println("With a bigger buffer we can read more text")
+	out := make([]byte, 100)
+	color.Yellow.Println("Insert some text max(100)")
+	readToSlice(out)
+	color.Cyan.Println("readed:", string(out))
 }
 
 // TestPeekBuffered checks whats in the buffer
 func TestPeekBuffered() {
+	out := make([]byte, 1)
+	color.Info.Println("With a smaller buffer (not 0) the reader put the rest on the buffer")
+	color.Yellow.Println("Insert some words")
+	readToSlice(out)
+	if len(out) > 1 {
+		color.Error.Printf("Expected io buffer to be len 1 got %d instead", len(out))
+	}
+
 	color.Info.Println("Peeking into the buffer")
 	out, err := r.Peek(r.Buffered())
 	if err != nil {
 		color.Error.Println("Could not peek into a console buffer", err)
+	}
+
+	if len(out) != r.Buffered() {
+		color.Error.Printf("Expected bufio buffer to be len %d got %d instead", r.Buffered(), len(out))
 	}
 	color.Cyan.Printf("Peeked from the buffer: %v\n", string(out))
 }
@@ -52,19 +66,9 @@ func TestDiscard() {
 		color.Error.Println("Could not discard from the console buffer", err)
 	} else if n != td {
 		color.Error.Printf("Expected 0 bytes on the buffer, got %d\n", n)
+	} else {
+		color.Cyan.Println("Discard worked as expected")
 	}
-}
-
-// Mega do stuff
-func Mega() {
-	reader := bufio.NewReader(os.Stdin)
-	out := make([]byte, 2)
-	reader.Read(out)
-	reader.Read(out)
-	//reader.Read(out)
-	ln, _ := reader.Peek(reader.Buffered())
-	color.Warn.Println(string(ln))
-	//color.Warn.Println(reader.Buffered())
 }
 
 func readToSlice(s []byte) int {
