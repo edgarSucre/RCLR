@@ -11,26 +11,25 @@ import (
 
 func TestRuneLiteral(t *testing.T) {
 	color.Info.Println(`
-	TestRuneLiteral: Go saves individual characters as Unicode.
-	This Unicode is represented by the type 'Rune' which is a alias
-	for type int32.
+	TestRuneLiteral: Go almacena caracteres individuales como Unicode.
+	Unicode es representado por el tipo 'Rune' el cual es un alias para el tipo int32.
 	`)
 	character := 'E'
 	tipo := fmt.Sprint((reflect.TypeOf(character)))
 	if tipo != "int32" {
-		color.Error.Println("TestRuneLiteral: Characters was not saved as Rune\n")
+		color.Error.Println("TestRuneLiteral: Characters was not saved as Rune")
 		logDifferential("int32", tipo)
 		t.Fail()
 	}
 }
 
 func TestStringIteration(t *testing.T) {
-	color.Info.Printf("\tTestStringIteration: iterating a string gets you Runes\n")
+	color.Info.Println("\tTestStringIteration: iterando una cadena optienes Runes\n")
 	phrase := "A collection of words"
 	for _, character := range phrase {
 		tipo := fmt.Sprint((reflect.TypeOf(character)))
 		if tipo != "int32" {
-			color.Error.Println("TestStringIteration: Characters was not saved as Rune\n")
+			color.Error.Println("TestStringIteration: Caracteres no fueron almacenados como Rune")
 			logDifferential("int32", tipo)
 			t.Fail()
 		}
@@ -38,20 +37,20 @@ func TestStringIteration(t *testing.T) {
 }
 
 func TestNumberToString(t *testing.T) {
-	color.Info.Printf("\tNumberToString: just cast it\n")
+	color.Info.Println("\tNumberToString: solo es necesario castiarlo")
 	age := 25
 	sage := string(age + 30)
 	tipo := fmt.Sprint((reflect.TypeOf(sage)))
 	if tipo != "string" {
-		color.Error.Printf("\tCould not cast number to string\n")
+		color.Error.Println("\tNumberToString: no se pudo castear de numero a string")
 		logDifferential("string", tipo)
 		t.Fail()
 	}
 }
 
 func TestStringToInt(t *testing.T) {
-	color.Info.Println(`
-	TestStringToInt: From string to int requires the strconv package
+	color.Info.Print(`
+	TestStringToInt: De string hacia entero se requiere el usar el paquete strconv y la funcion ParseInt
 	`)
 	age := "25"
 	sage, err := strconv.ParseInt(age, 10, 32)
@@ -65,7 +64,7 @@ func TestStringToInt(t *testing.T) {
 
 func TestStringToFloat(t *testing.T) {
 	color.Info.Println(`
-	TestStringToInt: From string to float requires the strconv package
+	TestStringToFloat: De string hacia float se requiere el usar el paquete strconv y la funcion ParseFloat
 	`)
 	slim := "80.5"
 	fat, err := strconv.ParseFloat(slim, 64)
@@ -74,5 +73,47 @@ func TestStringToFloat(t *testing.T) {
 		color.Error.Printf("\tCould not convert string to float\n")
 		logDifferential(160.5, fat)
 		t.Fail()
+	}
+}
+
+func TestMake(t *testing.T) {
+
+	color.Info.Println(`
+	TestMake: Go puede crear variables de tipos slice, map, chan y reservar su tamaño usando la funcion make
+	`)
+
+	makeSlice := make([]int, 10)
+	makeMap := make(map[string]string)
+	makeChan := make(chan int)
+
+	color.Info.Println("\tmake se puede usar para general slices dinamicos")
+	if len(makeSlice) != 10 {
+		color.Error.Printf("\tTestMake: no se pudo crear makeSlice con el tamaño especificado\n")
+		logDifferential(10, len(makeSlice))
+		t.FailNow()
+	}
+
+	color.Info.Println("\tpara slice se puede pasar un tercer parametro para indicar la capacidad > len")
+	makeSlice = make([]int, 10, 15)
+	if cap(makeSlice) != 15 {
+		color.Error.Printf("\tTestMake: no se pudo crear makeSlice con la capacidad especificada\n")
+		logDifferential(15, cap(makeSlice))
+		t.FailNow()
+	}
+
+	color.Info.Println("\tmap creado con make inicializan los campos con valor zero deacuerdo al tipo")
+	if makeMap[""] != "" {
+		color.Error.Printf("\tTestMake: no se pudo crear makeMap cone el valor zero(string)\n")
+		logDifferential("Cadena Vacia", makeMap)
+		t.FailNow()
+	}
+
+	chanType := fmt.Sprint(reflect.TypeOf(makeChan))
+
+	color.Info.Println("\tmake es la unica manera de crear canales != nil")
+	if chanType != "chan int" || makeChan == nil {
+		color.Error.Printf("\tTestMake: no se pudo crear makeChan cone el valor zero(chan it)\n")
+		logDifferential("chan int", chanType)
+		t.FailNow()
 	}
 }
