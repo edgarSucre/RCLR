@@ -76,38 +76,42 @@ func TestStringToFloat(t *testing.T) {
 	}
 }
 
-func TestMake(t *testing.T) {
+func TestMakeSlice(t *testing.T) {
 
 	color.Info.Println(`
-	TestMake: Go puede crear variables de tipos slice, map, chan y reservar su tamaño usando la funcion make
+	TestMake: Go puede crear variables de tipos slice reservar su tamaño usando la funcion make
 	`)
+	sli := make([]int, 10)
 
-	makeSlice := make([]int, 10)
-	makeMap := make(map[string]string)
-	makeChan := make(chan int)
-
-	color.Info.Println("\tmake se puede usar para general slices dinamicos")
-	if len(makeSlice) != 10 {
-		color.Error.Printf("\tTestMake: no se pudo crear makeSlice con el tamaño especificado\n")
-		logDifferential(10, len(makeSlice))
+	if len(sli) != 10 {
+		color.Error.Printf("\tTestMake: no se pudo crear sli con el tamaño especificado\n")
+		logDifferential(10, len(sli))
 		t.FailNow()
 	}
 
 	color.Info.Println("\tpara slice se puede pasar un tercer parametro para indicar la capacidad > len")
-	makeSlice = make([]int, 10, 15)
-	if cap(makeSlice) != 15 {
-		color.Error.Printf("\tTestMake: no se pudo crear makeSlice con la capacidad especificada\n")
-		logDifferential(15, cap(makeSlice))
+	sli = make([]int, 10, 15)
+	if cap(sli) != 15 {
+		color.Error.Printf("\tTestMake: no se pudo crear sli con la capacidad especificada\n")
+		logDifferential(15, cap(sli))
 		t.FailNow()
 	}
+}
 
+func TestMakeMap(t *testing.T) {
+
+	makeMap := make(map[string]string)
 	color.Info.Println("\tmap creado con make inicializan los campos con valor zero deacuerdo al tipo")
 	if makeMap[""] != "" {
 		color.Error.Printf("\tTestMake: no se pudo crear makeMap cone el valor zero(string)\n")
 		logDifferential("Cadena Vacia", makeMap)
 		t.FailNow()
 	}
+}
 
+func TestMakeChan(t *testing.T) {
+
+	makeChan := make(chan int)
 	chanType := fmt.Sprint(reflect.TypeOf(makeChan))
 
 	color.Info.Println("\tmake es la unica manera de crear canales != nil")
