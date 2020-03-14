@@ -86,8 +86,18 @@ func TestMakeChan(t *testing.T) {
 
 	makeChan := make(chan int)
 	chanType := fmt.Sprint(reflect.TypeOf(makeChan))
-	color.Info.Println("\tmake es la unica manera de crear canales != nil")
+	color.Info.Println("\tMake es la unica manera de crear canales != nil")
 	assertEquals(chanType, "chan int", "\tTestMake: no se pudo crear makeChan cone el valor zero(chan it)\n", t)
 }
 
-//TODO: crear test usando la funcion new
+func TestNew(t *testing.T) {
+	newString := new(string)
+	newInt := new(int)
+
+	strType := fmt.Sprint(reflect.TypeOf(newString))
+	intype := fmt.Sprint(reflect.TypeOf(newInt))
+
+	color.Info.Println("\tNew retorna un pointer del tipo especificado")
+	assertEquals(strType, "*string", "\tTestNew: no se pudo crear un pointer string\n", t)
+	assertEquals(intype, "*int", "\tTestNew: no se pudo crear un pointer int\n", t)
+}
