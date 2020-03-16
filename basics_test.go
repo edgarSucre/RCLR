@@ -12,7 +12,8 @@ func TestRuneLiteral(t *testing.T) {
 	Unicode es representado por el tipo 'Rune' el cual es un alias para el tipo int32.`)
 	character := 'E'
 	tipo := fmt.Sprint((reflect.TypeOf(character)))
-	assertEquals(tipo, "int32", "TestRuneLiteral: Characters was not saved as Rune", t)
+	assertEquals(tipo, "int32",
+		"TestRuneLiteral: Characters was not saved as Rune", t)
 }
 
 func TestStringIteration(t *testing.T) {
@@ -20,7 +21,8 @@ func TestStringIteration(t *testing.T) {
 	phrase := "A collection of words"
 	for _, character := range phrase {
 		tipo := fmt.Sprint((reflect.TypeOf(character)))
-		assertEquals(tipo, "int32", "TestStringIteration: Caracteres no fueron almacenados como Rune", t)
+		assertEquals(tipo, "int32",
+			"TestStringIteration: Caracteres no fueron almacenados como Rune", t)
 	}
 }
 
@@ -29,7 +31,8 @@ func TestNumberToString(t *testing.T) {
 	age := 25
 	sage := string(age + 30)
 	tipo := fmt.Sprint((reflect.TypeOf(sage)))
-	assertEquals(tipo, "string", "NumberToString: no se pudo castear de numero a string", t)
+	assertEquals(tipo, "string",
+		"NumberToString: no se pudo castear de numero a string", t)
 }
 
 func TestStringToInt(t *testing.T) {
@@ -56,11 +59,13 @@ func TestMakeSlice(t *testing.T) {
 	info(`TestMake: Go puede crear variables de tipos slice reservar su tamaño usando
 	la funcion make`)
 	sli := make([]int, 10)
-	assertEquals(len(sli), 10, "TestMake: no se pudo crear sli con el tamaño especificado", t)
+	assertEquals(len(sli), 10,
+		"TestMake: no se pudo crear sli con el tamaño especificado", t)
 
-	info("para slice se puede pasar un tercer parametro para indicar la capacidad > len")
+	info("Para slice se puede pasar un tercer parametro para indicar la capacidad > len")
 	sli = make([]int, 10, 15)
-	assertEquals(cap(sli), 15, "TestMake: no se pudo crear sli con la capacidad especificada", t)
+	assertEquals(cap(sli), 15,
+		"TestMake: no se pudo crear sli con la capacidad especificada", t)
 }
 
 func TestMakeMap(t *testing.T) {
@@ -73,7 +78,8 @@ func TestMakeMap(t *testing.T) {
 
 	makeMap := make(map[string]string)
 	info("Map creado con make inicializan los campos con valor zero deacuerdo al tipo")
-	assertEquals(makeMap[""], "", "TestMake: no se pudo crear makeMap cone el valor zero(string)", t)
+	assertEquals(makeMap[""], "",
+		"TestMake: no se pudo crear makeMap cone el valor zero(string)", t)
 }
 
 func TestMakeChan(t *testing.T) {
@@ -81,7 +87,8 @@ func TestMakeChan(t *testing.T) {
 	makeChan := make(chan int)
 	chanType := fmt.Sprint(reflect.TypeOf(makeChan))
 	info("Make es la unica manera de crear canales != nil")
-	assertEquals(chanType, "chan int", "TestMake: no se pudo crear makeChan cone el valor zero(chan it)", t)
+	assertEquals(chanType, "chan int",
+		"TestMake: no se pudo crear makeChan cone el valor zero(chan it)", t)
 }
 
 func TestNew(t *testing.T) {
