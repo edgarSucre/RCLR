@@ -1,3 +1,3 @@
-module github.com/edgarSucre/RCTLR
+module github.com/edgarSucre/rctlr
 
 go 1.13
