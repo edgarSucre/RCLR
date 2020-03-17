@@ -74,12 +74,11 @@ func TestMakeMap(t *testing.T) {
 
 	utils.Info("El valor empty de un map es nil")
 	var nilMap map[string]string
-	if nilMap != nil {
-		utils.FailTest("TestMakeMap: el valor de empty de Map no es nil", "nil", nilMap, t)
-	}
+	utils.AssertTrue(nilMap == nil, "TestMakeMap: el valor de empty de Map debio ser nil", t)
 
 	makeMap := make(map[string]string)
 	utils.Info("Map creado con make inicializan los campos con valor zero deacuerdo al tipo")
+	utils.AssertTrue(makeMap != nil, "TestMakeMap: make crea un map y reserva el espacio", t)
 	utils.AssertEquals(makeMap[""], "",
 		"TestMake: no se pudo crear makeMap cone el valor zero(string)", t)
 }

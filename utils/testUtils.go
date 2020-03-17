@@ -13,14 +13,6 @@ const (
 	errorColor   = "\033[1;31m\t%s\033[0m\n"
 )
 
-//FailTest fix this
-func FailTest(message string, expected, actual interface{}, t *testing.T) {
-	Err(message)
-	Warn(fmt.Sprint("Expected:", expected))
-	Warn(fmt.Sprint("Actual:", actual))
-	t.FailNow()
-}
-
 //AssertEquals log errors if values are not equal
 func AssertEquals(expected, actual interface{}, message string, t *testing.T) {
 	if expected != actual {
@@ -41,10 +33,11 @@ func AssertContains(content, token, message string, t *testing.T) {
 	}
 }
 
-//AsertNil log errores si token no es nulo
-func AssertNil(token interface{}, message string, t *testing.T) {
-	if token != nil {
+//AssertTrue log errores si token no es true
+func AssertTrue(token bool, message string, t *testing.T) {
+	if !token {
 		Err(message)
+		t.FailNow()
 	}
 }
 

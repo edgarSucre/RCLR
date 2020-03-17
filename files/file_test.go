@@ -17,5 +17,5 @@ func TestOpenFileSameFolder(t *testing.T) {
 	utils.Info(`La manera mas facil de abrir un archivo es con la funcion "Open" 
 	del packete "os"`)
 	_, err := os.Open("safe.txt")
-	utils.AssertNil(err, `No se pudo abrir el archivo "safe"`, t)
+	utils.AssertTrue(err == nil, `No se pudo abrir el archivo "safe"`, t)
 }
