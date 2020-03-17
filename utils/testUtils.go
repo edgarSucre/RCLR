@@ -19,7 +19,7 @@ func AssertEquals(expected, actual interface{}, message string, t *testing.T) {
 		Err(message)
 		Warn(fmt.Sprint("Expected:", expected))
 		Warn(fmt.Sprint("Actual:", actual, "\n"))
-		t.FailNow()
+		t.Fail()
 	}
 }
 
@@ -29,7 +29,7 @@ func AssertContains(content, token, message string, t *testing.T) {
 		Err(message)
 		Warn(fmt.Sprint("Mensaje: ", content))
 		Warn(fmt.Sprint("No contiene: ", token))
-		t.FailNow()
+		t.Fail()
 	}
 }
 
@@ -37,7 +37,7 @@ func AssertContains(content, token, message string, t *testing.T) {
 func AssertTrue(token bool, message string, t *testing.T) {
 	if !token {
 		Err(message)
-		t.FailNow()
+		t.Fail()
 	}
 }
 

@@ -13,9 +13,15 @@ func TestOpenInvalidFile(t *testing.T) {
 	utils.AssertContains(err.Error(), "content.txt", "Mensaje de error incorrecto", t)
 }
 
-func TestOpenFileSameFolder(t *testing.T) {
+func TestOpenFile(t *testing.T) {
 	utils.Info(`La manera mas facil de abrir un archivo es con la funcion "Open" 
 	del packete "os"`)
 	_, err := os.Open("safe.txt")
 	utils.AssertTrue(err == nil, `No se pudo abrir el archivo "safe"`, t)
+
+	_, err = os.Open("./sub/sub.txt")
+	utils.AssertTrue(err == nil, `No se pudo abrir el archivo "sub/sub.txt"`, t)
+
+	_, err = os.Open("../upper.txt")
+	utils.AssertTrue(err == nil, `No se pudo abrir el archivo "../upper.txt"`, t)
 }
