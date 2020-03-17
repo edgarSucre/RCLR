@@ -33,7 +33,8 @@ func TestOpenFile(t *testing.T) {
 
 func TestReadFileReadAll(t *testing.T) {
 	utils.Info(`Una manera de leer el contendio de un archivo es meidantes la
-	utilizacion de la funcion ReadALl del paquete ioutil`)
+	utilizacion de la funcion ReadALl del paquete ioutil. Esta funcion retorna
+	un slice de bytes, el cual debe puede ser transformado a string: "string(content)"`)
 	f1, err := os.Open("safe.txt")
 	if err != nil {
 		utils.Err("No se pudo abrir el archivo safe.txt")
