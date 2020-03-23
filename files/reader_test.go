@@ -2,8 +2,8 @@ package files
 
 import (
 	"bufio"
-	"fmt"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/edgarSucre/rctlr/utils"
@@ -82,17 +82,19 @@ func TestReaderDiscard(t *testing.T) {
 }
 
 func TestReadRuneVSReadByte(t *testing.T) {
-	f := getFile(t)
-	defer f.Close()
-	reader := bufio.NewReader(f)
+	sr := strings.NewReader("日")
+	reader := bufio.NewReader(sr)
 
-	bChar, _ := reader.ReadByte()
-	fmt.Println(string(bChar))
+	utils.Info(`TestReadRuneVSReadByte: read byte returns the first byte
+	representing UTF-8 encodend string`)
+	by, _ := reader.ReadByte()
+	utils.AssertEquals(by, byte(230), "El byte leido no concuerda", t)
+	reader.UnreadByte()
 
-	rChar, size, _ := reader.ReadRune()
-	fmt.Println(string(rChar), size)
-	utils.Err("Investigar mas sobre runes vs bytes")
-	t.Fail()
+	utils.Info(`TestReadRuneVSReadByte: ReadRune returns the rune representation
+	of a character of the string`)
+	ru, _, _ := reader.ReadRune()
+	utils.AssertEquals(ru, rune(26085), "Rune no concuerda", t)
 }
 
 func getFile(t *testing.T) *os.File {
