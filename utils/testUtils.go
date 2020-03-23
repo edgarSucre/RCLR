@@ -33,6 +33,16 @@ func AssertContains(content, token, message string, t *testing.T) {
 	}
 }
 
+//AssertNotContains log errores si el contenido incluye el token
+func AssertNotContains(content, token, message string, t *testing.T) {
+	if strings.Contains(content, token) {
+		Err(message)
+		Warn(fmt.Sprint("Mensaje: ", content))
+		Warn(fmt.Sprint("Contiene: ", token))
+		t.Fail()
+	}
+}
+
 //AssertTrue log errores si token no es true
 func AssertTrue(token bool, message string, t *testing.T) {
 	if !token {
