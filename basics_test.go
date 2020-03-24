@@ -112,3 +112,23 @@ func TestMapZero(t *testing.T) {
 	utils.AssertFalse(ok, "Map key[juan] was initialized", t)
 	utils.AssertEquals(age, 0, "Map keykey[juan] was not zero", t)
 }
+
+type address struct {
+	town   string
+	street string
+}
+
+type student struct {
+	level int
+	address
+}
+
+func TestStructAnnonymousField(t *testing.T) {
+	utils.Info(`TestStructAnnonymousField: With annonymous field you can access the 
+	inner fields direcly using the dot notation, but not as struct literal`)
+	p1 := student{level: 1}
+	p1.town = "Gotham City"
+	p1.street = "Cave"
+
+	utils.AssertEquals(p1.street, "Cave", "No se pudo acceder al inner field", t)
+}
