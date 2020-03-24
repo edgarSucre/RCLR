@@ -103,3 +103,12 @@ func TestNew(t *testing.T) {
 	utils.AssertEquals(strType, "*string", "TestNew: no se pudo crear un pointer string", t)
 	utils.AssertEquals(intype, "*int", "TestNew: no se pudo crear un pointer int", t)
 }
+
+func TestMapZero(t *testing.T) {
+	utils.Info("TestMapZero: Maps return a boolean indicating if the key was assign")
+	m := make(map[string]int)
+	m["edgar"] = 40
+	age, ok := m["juan"]
+	utils.AssertFalse(ok, "Map key[juan] was initialized", t)
+	utils.AssertEquals(age, 0, "Map keykey[juan] was not zero", t)
+}

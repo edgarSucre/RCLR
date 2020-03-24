@@ -43,12 +43,17 @@ func AssertNotContains(content, token, message string, t *testing.T) {
 	}
 }
 
-//AssertTrue log errores si token no es true
+//AssertTrue log errores si token es false
 func AssertTrue(token bool, message string, t *testing.T) {
 	if !token {
 		Err(message)
 		t.Fail()
 	}
+}
+
+//AssertFalse log errores si token es true
+func AssertFalse(token bool, message string, t *testing.T) {
+	AssertTrue(!token, message, t)
 }
 
 //Err log error message
