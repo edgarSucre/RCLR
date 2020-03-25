@@ -5,6 +5,10 @@ type ExportedType struct {
 	AnotherType
 }
 
+func (e ExportedType) String() string {
+	return "ExportedType: " + e.name
+}
+
 //AnotherType is just a type with an unexported name
 type AnotherType struct {
 	name string

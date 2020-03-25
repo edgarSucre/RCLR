@@ -134,7 +134,20 @@ func TestStructAnnonymousField(t *testing.T) {
 }
 
 func TestPromotedMethods(t *testing.T) {
+	utils.Info(`TestPromotedMethods: Annonymous fields promote their exported
+	fields and methods`)
 	et := utils.ExportedType{}
 	et.SetName("Pikachu")
 	utils.AssertEquals("Hi Pikachu", et.Hi(), "El methodo Hi, no fue promovido", t)
+}
+
+func TestStringerIterface(t *testing.T) {
+	utils.Info(`TestStringerIterface: un tipo que satisface la interface stringer
+	aparecera de manera diferente cuando se imprima`)
+
+	et := utils.ExportedType{}
+	et.SetName("Charizard")
+	out := fmt.Sprint(et)
+
+	utils.AssertEquals(out, "ExportedType: Charizard", "does this work?", t)
 }
