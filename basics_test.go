@@ -132,3 +132,9 @@ func TestStructAnnonymousField(t *testing.T) {
 
 	utils.AssertEquals(p1.street, "Cave", "No se pudo acceder al inner field", t)
 }
+
+func TestPromotedMethods(t *testing.T) {
+	et := utils.ExportedType{}
+	et.SetName("Pikachu")
+	utils.AssertEquals("Hi Pikachu", et.Hi(), "El methodo Hi, no fue promovido", t)
+}
