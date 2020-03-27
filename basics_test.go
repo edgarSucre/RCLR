@@ -151,3 +151,27 @@ func TestStringerIterface(t *testing.T) {
 
 	utils.AssertEquals(out, "ExportedType: Charizard", "does this work?", t)
 }
+
+func caos() {
+	err := fmt.Errorf("Database server is down")
+	panic(err)
+}
+
+func calmDown(t *testing.T) {
+	errMsg := recover()
+	err, ok := errMsg.(error)
+	if ok {
+		utils.AssertEquals("Database server is down", err.Error(),
+			"Recover msg does not match panic error", t)
+	} else {
+		utils.Err("Recover value was not an error")
+		t.Fail()
+	}
+}
+
+func TestPanicAndRecover(t *testing.T) {
+	utils.Info(`TestPanicAndRecover: We can use recover() function to prevent a panic
+	from crashing the application`)
+	defer calmDown(t)
+	caos()
+}
