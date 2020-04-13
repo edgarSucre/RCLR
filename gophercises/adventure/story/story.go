@@ -8,16 +8,16 @@ import (
 )
 
 //Option of the story
-type option struct {
-	text string
-	arc  string
+type Option struct {
+	Text string
+	Arc  string
 }
 
 //Story struct holds the story and its options
 type Story struct {
 	Title   string
 	Story   []string
-	Options []option
+	Options []Option
 }
 
 //Adventure holds all the stories
@@ -34,7 +34,7 @@ func (a Adventure) GetStory(name string) (Story, error) {
 
 //GetAdventure returns the stories for the adventure
 func GetAdventure() Adventure {
-	jsonAdventure := getJSON("gopher.json")
+	jsonAdventure := getJSON("./story/gopher.json")
 
 	adventure := make(Adventure)
 	json.Unmarshal(jsonAdventure, &adventure)

@@ -7,8 +7,11 @@ import (
 
 func TestGetStories(t *testing.T) {
 	adventure := story.GetAdventure()
-	_, err := adventure.GetStory("intro")
+	intro, err := adventure.GetStory("intro")
 	if err != nil {
 		t.Error("Story Intro expected")
+	}
+	if len(intro.Options) == 0 || len(intro.Story) == 0 || len(intro.Title) == 0 {
+		t.Error("Bad formed story")
 	}
 }
