@@ -9,15 +9,15 @@ import (
 
 //Option of the story
 type Option struct {
-	Text string
-	Arc  string
+	Text string `json:"text"`
+	Arc  string `json:"arc"`
 }
 
 //Story struct holds the story and its options
 type Story struct {
-	Title   string
-	Story   []string
-	Options []Option
+	Title   string   `json:"title"`
+	Story   []string `json:"story"`
+	Options []Option `json:"options"`
 }
 
 //Adventure holds all the stories
