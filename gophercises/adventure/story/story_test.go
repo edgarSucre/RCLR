@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetStories(t *testing.T) {
-	adventure := story.GetAdventure()
+	adventure := story.GetAdventure("./gopher.json")
 	intro, err := adventure.GetStory("intro")
 	if err != nil {
 		t.Error("Story Intro expected")

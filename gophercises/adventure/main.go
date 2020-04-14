@@ -1,6 +1,7 @@
 package main
 
 import (
+	"adventure/server"
 	"adventure/story"
 	"html/template"
 	"log"
@@ -15,26 +16,18 @@ func main() {
 	// 5. Refactor to expose command interface
 	// 6. Bonus points
 
-	adventure := story.GetAdventure()
+	adventure := story.GetAdventure("./story/gopher.json")
+	t := loadTemplate("index.html")
 
-	intro, err := adventure.GetStory("intro")
+	handler := server.NewTaleHandler(t, adventure)
+
+	log.Println(http.ListenAndServe(":8080", handler))
+}
+
+func loadTemplate(path string) *template.Template {
+	t, err := template.ParseFiles(path)
 	if err != nil {
 		panic(err)
 	}
-
-	serve(intro)
-}
-
-func serve(intro story.Story) {
-	handler := func(response http.ResponseWriter, request *http.Request) {
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			panic(err)
-		}
-		t.Execute(response, intro)
-	}
-
-	http.HandleFunc("/", handler)
-	log.Println("Listening on port 8080")
-	log.Println(http.ListenAndServe(":8080", nil))
+	return t
 }

@@ -27,14 +27,14 @@ type Adventure map[string]Story
 func (a Adventure) GetStory(name string) (Story, error) {
 	intro, ok := a[name]
 	if !ok {
-		return intro, fmt.Errorf("Story %v, not found on the Adventure", name)
+		return intro, fmt.Errorf("Story '%v', not found on the Adventure", name)
 	}
 	return intro, nil
 }
 
 //GetAdventure returns the stories for the adventure
-func GetAdventure() Adventure {
-	jsonAdventure := getJSON("./story/gopher.json")
+func GetAdventure(filePath string) Adventure {
+	jsonAdventure := getJSON(filePath)
 
 	adventure := make(Adventure)
 	json.Unmarshal(jsonAdventure, &adventure)
