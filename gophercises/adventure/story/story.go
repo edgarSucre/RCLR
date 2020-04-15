@@ -24,8 +24,8 @@ type Story struct {
 type Adventure map[string]Story
 
 //GetStory returns the intro story
-func (a Adventure) GetStory(name string) (Story, error) {
-	intro, ok := a[name]
+func (a *Adventure) GetStory(name string) (Story, error) {
+	intro, ok := (*a)[name]
 	if !ok {
 		return intro, fmt.Errorf("Story '%v', not found on the Adventure", name)
 	}
@@ -33,24 +33,27 @@ func (a Adventure) GetStory(name string) (Story, error) {
 }
 
 //GetAdventure returns the stories for the adventure
-func GetAdventure(filePath string) Adventure {
-	jsonAdventure := getJSON(filePath)
+func GetAdventure(filePath string) (*Adventure, error) {
+	jsonAdventure, err := getJSON(filePath)
+	if err != nil {
+		return nil, err
+	}
 
-	adventure := make(Adventure)
+	adventure := new(Adventure)
 	json.Unmarshal(jsonAdventure, &adventure)
-	return adventure
+	return adventure, nil
 }
 
-func getJSON(file string) []byte {
+func getJSON(file string) ([]byte, error) {
 	jf, err := os.Open(file)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	encodedJSON, err := ioutil.ReadAll(jf)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return encodedJSON
+	return encodedJSON, nil
 }
